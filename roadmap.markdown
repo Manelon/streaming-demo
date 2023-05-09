@@ -1,9 +1,16 @@
 The goal of this demo is demostrarte the streaming capabilities with kafka and the whole kafka ecosystem. 
-- [ ] Version 1
-  - [ ] a Kafka Cluster
-  - [ ] a MySQL Database with CDC and Debezium as source
-  - [ ] a PostgreSQL Database as sink
-  - [ ] a KafkaConnect Cluster
-  - [ ] a Data Generator for MySQL database
-  - [ ] Debezium Source Connector
+- [ ] Demo1: Replica of a MySQL database to a PostgreSQL database using CDC and Kafka
+  - [x] a Kafka Cluster
+  - [x] a MySQL Database with CDC and Debezium as source
+  - [x] a PostgreSQL Database as sink
+  - [x] a KafkaConnect Cluster
+  - [x] Kafka Client
+  - [x] a Data Generator for MySQL database
+  - [x] Debezium Source Connector
   - [x] JDBC Sink Connector
+  - [ ] Draw diagrams
+  - [ ] Document how to run the demo
+  - [ ] Document the software is needed
+- [ ] Business event Generation
+- [ ] Real time statistics
+- [ ] Materialized Views
