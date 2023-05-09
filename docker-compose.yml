@@ -88,7 +88,7 @@ services:
     # when running this offline, spin up the stack once and then run : 
     #   docker cp kafka-connect:/usr/share/confluent-hub-components ./data/connect-jars
     volumes:
-      - $PWD/data:/data
+      - $PWD/docker-volumes/kafka-connect:/data
     # In the command section, $ are replaced with $$ to avoid the error 'Invalid interpolation format for "command" option'
     command:
       - bash
@@ -116,8 +116,8 @@ services:
      - MYSQL_USER=mysqluser
      - MYSQL_PASSWORD=mysqlpw
     volumes:
-     - ${PWD}/data/mysql:/docker-entrypoint-initdb.d
-     - ${PWD}/data:/data
+     - ${PWD}/docker-volumes/mysql/db-initializer:/docker-entrypoint-initdb.d
+     - ${PWD}/docker-volumes/mysql/scripts:/data
   
   postgres:
     # *-----------------------------*
@@ -132,7 +132,7 @@ services:
      - POSTGRES_USER=postgres
      - POSTGRES_PASSWORD=postgres
     volumes:
-     - ./data/postgres:/docker-entrypoint-initdb.d/
+     - ./docker-volumes/postgres:/docker-entrypoint-initdb.d/
 
 
   kafkacat:
