@@ -1,1 +1,1 @@
-docker-compose exec mysql bash /data/populate-more-orders.sh
+docker exec mysql bash /data/populate-more-orders.sh
