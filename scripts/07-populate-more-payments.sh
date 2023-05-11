@@ -1,0 +1,1 @@
+docker exec mysql bash /data/populate-more-transactions.sh
