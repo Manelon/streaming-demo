@@ -2,14 +2,14 @@
 version: '2'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:6.2.0
+    image: confluentinc/cp-zookeeper:7.4.0
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
   broker:
-    image: confluentinc/cp-kafka:6.2.0
+    image: confluentinc/cp-kafka:7.4.0
     container_name: broker
     depends_on:
       - zookeeper
@@ -48,7 +48,7 @@ services:
       KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=broker -Dcom.sun.management.jmxremote.rmi.port=9997
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:6.2.0
+    image: confluentinc/cp-schema-registry:7.0.9
     container_name: schema-registry
     ports:
       - "8081:8081"
@@ -59,7 +59,7 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: broker:29092
 
   kafka-connect:
-    image: confluentinc/cp-kafka-connect-base:6.2.0
+    image: confluentinc/cp-kafka-connect-base:7.4.0
     container_name: kafka-connect
     depends_on:
       - broker
@@ -126,6 +126,8 @@ services:
     # *-----------------------------*
     image: postgres:11
     container_name: postgres
+    depends_on:
+      - broker
     ports:
       - "5432:5432"
     environment:
@@ -136,7 +138,7 @@ services:
 
 
   kafkacat:
-    image: edenhill/kafkacat:1.6.0
+    image: confluentinc/cp-kafkacat:7.0.9
     container_name: kafkacat
     entrypoint: 
       - /bin/sh 
@@ -154,6 +156,7 @@ services:
       - broker
       - schema-registry
       - kafka-connect
+      # - ksqldb-server
 
     environment:
       KAFKA_CLUSTERS_0_NAME: local
@@ -162,4 +165,40 @@ services:
       KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: k-connect
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect:8083
+      # KAFKA_CLUSTERS_0_KSQLDBSERVER: http://ksqldb-server:8088
       DYNAMIC_CONFIG_ENABLED: 'true'
+  
+  # ksqldb-server:
+  #   image: confluentinc/cp-ksqldb-server:7.4.0
+  #   container_name: ksqldb-server
+  #   ports:
+  #     - 8088:8088
+  #   depends_on:
+  #     - broker
+  #     - schema-registry
+  #     - kafka-connect
+  #   environment:
+  #     KSQL_BOOTSTRAP_SERVERS: broker:29092
+  #     KSQL_LISTENERS: http://0.0.0.0:8088
+  #     KSQL_KSQL_SERVICE_ID: mnl_ksql
+  #     KSQL_CUB_KAFKA_TIMEOUT: 300
+  #     KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+  #     KSQL_KSQL_CONNECT_URL: http://kafka-connect0:8083
+  #     # -v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v
+  #     # Useful settings for development/laptop use - modify as needed for Prod
+  #     KSQL_KSQL_COMMIT_INTERVAL_MS: 2000
+  #     KSQL_KSQL_SINK_PARTITIONS: 1
+  #     KSQL_KSQL_CACHE_MAX_BYTES_BUFFERING: 10000000
+  #     KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
+  #     # -v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v
+  #     # Producer Confluent Monitoring Interceptors for Control Center streams monitoring
+  #     KSQL_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+  #     KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+
+  # ksqldb-cli:
+  #   image: confluentinc/cp-ksqldb-cli:7.4.0
+  #   container_name: ksql-cli
+  #   depends_on:
+  #     - ksqldb-server
+  #   entrypoint: /bin/sh
+  #   tty: true

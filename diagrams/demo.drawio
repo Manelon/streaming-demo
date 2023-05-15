@@ -1,0 +1,63 @@
+<mxfile host="65bd71144e">
+    <diagram id="NviYlvgyt8w0c_QLxXPa" name="Components">
+        <mxGraphModel dx="886" dy="774" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="keXicHBGsKMsPxJepYgX-1" value="MySQL" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="30" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="keXicHBGsKMsPxJepYgX-2" value="PostgreSQL" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="180" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="keXicHBGsKMsPxJepYgX-5" value="Kafka Cluster" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="365" y="40" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="keXicHBGsKMsPxJepYgX-6" value="Kafka Connect Cluster" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="180" y="120" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="keXicHBGsKMsPxJepYgX-7" value="Schema Registry" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="365" y="190" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="q1CIJK4YInxsT8ihd82s" name="Data Flow">
+        <mxGraphModel dx="886" dy="774" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;font data-font-src=&quot;https://fonts.googleapis.com/css?family=Solitreo&quot; face=&quot;Solitreo&quot;&gt;My SQL&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+                    <mxGeometry x="20" y="140" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="CDC Capture" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;sketch=1;curveFitting=1;jiggle=2;" edge="1" parent="1" source="4" target="2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Debezium&lt;br&gt;(Kafka Connect&lt;br&gt;Source Connector)" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+                    <mxGeometry x="170" y="150" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;produces&lt;/font&gt;" style="endArrow=classic;html=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="4" target="7">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="420" as="sourcePoint"/>
+                        <mxPoint x="440" y="180" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="10" style="edgeStyle=none;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;" edge="1" parent="1" source="7" target="9">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Table Topic" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;direction=south;" vertex="1" parent="1">
+                    <mxGeometry x="380" y="150" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;" edge="1" parent="1" source="9" target="11">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Jdbc Sink Connector&lt;br&gt;(Kafka Connect)" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Solitreo;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DSolitreo;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="500" y="150" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="&lt;font data-font-src=&quot;https://fonts.googleapis.com/css?family=Solitreo&quot; face=&quot;Solitreo&quot;&gt;PostgreSQL&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="1">
+                    <mxGeometry x="680" y="140" width="60" height="80" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -11,6 +11,8 @@ The goal of this demo is demostrarte the streaming capabilities with kafka and t
   - [ ] Draw diagrams
   - [ ] Document how to run the demo
   - [ ] Document the software is needed
+- [ ] add source mirror maker replicator with extraction of the record (DBEvent2Data)
 - [ ] Business event Generation
 - [ ] Real time statistics
 - [ ] Materialized Views
+- [ ] Kafka Streams
