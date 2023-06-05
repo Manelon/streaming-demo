@@ -1,0 +1,5 @@
+CREATE STREAM accounts_stream WITH (kafka_topic='mysql.demo.ACCOUNTS', value_format='avro');
+
+select after->id as accountId, after->balance as balance, before->balance as before_balance, TIMESTAMPTOSTRING(rowtime, 'yyyy-MM-dd HH:mm:ss') as row_timestamp from accounts_stream;
+
+CREATE STREAM red_numbers_event as select after->id as accountId, after->balance as balance, before->balance as before_balance, TIMESTAMPTOSTRING(rowtime, 'yyyy-MM-dd HH:mm:ss') as row_timestamp from accounts_stream where  after->balance < 0 and before->balance >= 0 EMIT CHANGES; 

@@ -156,7 +156,7 @@ services:
       - broker
       - schema-registry
       - kafka-connect
-      # - ksqldb-server
+      - ksqldb-server
 
     environment:
       KAFKA_CLUSTERS_0_NAME: local
@@ -165,35 +165,35 @@ services:
       KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: k-connect
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect:8083
-      # KAFKA_CLUSTERS_0_KSQLDBSERVER: http://ksqldb-server:8088
+      KAFKA_CLUSTERS_0_KSQLDBSERVER: http://ksqldb-server:8088
       DYNAMIC_CONFIG_ENABLED: 'true'
   
-  # ksqldb-server:
-  #   image: confluentinc/cp-ksqldb-server:7.4.0
-  #   container_name: ksqldb-server
-  #   ports:
-  #     - 8088:8088
-  #   depends_on:
-  #     - broker
-  #     - schema-registry
-  #     - kafka-connect
-  #   environment:
-  #     KSQL_BOOTSTRAP_SERVERS: broker:29092
-  #     KSQL_LISTENERS: http://0.0.0.0:8088
-  #     KSQL_KSQL_SERVICE_ID: mnl_ksql
-  #     KSQL_CUB_KAFKA_TIMEOUT: 300
-  #     KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-  #     KSQL_KSQL_CONNECT_URL: http://kafka-connect0:8083
-  #     # -v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v
-  #     # Useful settings for development/laptop use - modify as needed for Prod
-  #     KSQL_KSQL_COMMIT_INTERVAL_MS: 2000
-  #     KSQL_KSQL_SINK_PARTITIONS: 1
-  #     KSQL_KSQL_CACHE_MAX_BYTES_BUFFERING: 10000000
-  #     KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
-  #     # -v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v
-  #     # Producer Confluent Monitoring Interceptors for Control Center streams monitoring
-  #     KSQL_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
-  #     KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+  ksqldb-server:
+    image: confluentinc/cp-ksqldb-server:7.4.0
+    container_name: ksqldb-server
+    ports:
+      - 8088:8088
+    depends_on:
+      - broker
+      - schema-registry
+      - kafka-connect
+    environment:
+      KSQL_BOOTSTRAP_SERVERS: broker:29092
+      KSQL_LISTENERS: http://0.0.0.0:8088
+      KSQL_KSQL_SERVICE_ID: mnl_ksql
+      KSQL_CUB_KAFKA_TIMEOUT: 300
+      KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      KSQL_KSQL_CONNECT_URL: http://kafka-connect0:8083
+      # -v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v
+      # Useful settings for development/laptop use - modify as needed for Prod
+      KSQL_KSQL_COMMIT_INTERVAL_MS: 2000
+      KSQL_KSQL_SINK_PARTITIONS: 1
+      KSQL_KSQL_CACHE_MAX_BYTES_BUFFERING: 10000000
+      KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
+      # -v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v
+      # Producer Confluent Monitoring Interceptors for Control Center streams monitoring
+      KSQL_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+      KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
 
   # ksqldb-cli:
   #   image: confluentinc/cp-ksqldb-cli:7.4.0
