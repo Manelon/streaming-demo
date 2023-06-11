@@ -1,5 +1,16 @@
-CREATE STREAM accounts_stream WITH (kafka_topic='mysql.demo.ACCOUNTS', value_format='avro');
+CREATE STREAM accounts WITH (kafka_topic='mysql.demo.ACCOUNTS',  value_format='avro', key_format='avro');
+CREATE STREAM transactions WITH (kafka_topic='mysql.demo.TRANSACTIONS', value_format='avro', key_format='avro');
+CREATE STREAM orders WITH (kafka_topic='mysql.demo.ORDERS', value_format='avro', key_format='avro');
 
-select after->id as accountId, after->balance as balance, before->balance as before_balance, TIMESTAMPTOSTRING(rowtime, 'yyyy-MM-dd HH:mm:ss') as row_timestamp from accounts_stream;
+select rowkey->id as accountId, after->balance as balance, before->balance as previous_balance, after->UPDATE_TS as last_update, TIMESTAMPTOSTRING(after->UPDATE_TS, 'yyyy-MM-dd HH:mm:ss') as last_update_str from accounts limit 1;
 
-CREATE STREAM red_numbers_event as select after->id as accountId, after->balance as balance, before->balance as before_balance, TIMESTAMPTOSTRING(rowtime, 'yyyy-MM-dd HH:mm:ss') as row_timestamp from accounts_stream where  after->balance < 0 and before->balance >= 0 EMIT CHANGES; 
+CREATE STREAM events_overdraft as select rowkey, after->balance as balance, before->balance as previous_balance, after->UPDATE_TS as last_update from accounts where  after->balance < 0 and before->balance >= 0 EMIT CHANGES;
+
+SELECT count(*) as orders,  TIMESTAMPTOSTRING(WINDOWSTART, 'yyyy-MM-dd HH:mm:ss') as from , TIMESTAMPTOSTRING(WINDOWEND, 'yyyy-MM-dd HH:mm:ss') FROM orders
+  WINDOW TUMBLING (SIZE 1 MINUTE)
+  EMIT CHANGES;
+
+SELECT count(*) as orders,  TIMESTAMPTOSTRING(WINDOWSTART, 'yyyy-MM-dd HH:mm:ss'), TIMESTAMPTOSTRING(WINDOWEND, 'yyyy-MM-dd HH:mm:ss') FROM orders
+  WINDOW TUMBLING (SIZE 1 MINUTE)
+  EMIT FINAL;
+
